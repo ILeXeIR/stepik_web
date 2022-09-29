@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+	<meta charset='utf-8'>
+	<title>Q&A</title>
+</head>
+<body>
+	<ul>
+		{% for question in questions %}
+			<li><h2>
+				<a href="{% url 'qa:question' question.id %}">{{ question }}</a>
+			</h2></li>
+		{% endfor %}
+	</ul>
+	<nav><ul class="paginator">
+		{% for p in paginator.page_range %}
+			{% if p == page.number %}
+				<li class="active">
+			{% else %}
+				<li>
+			{% endif %}
+				<a href="{{ paginator.baseurl }}{{ p }}">{{ p }}</a>
+			</li>
+		{% endfor %}
+	</nav></ul>
+</body>
+</html>
