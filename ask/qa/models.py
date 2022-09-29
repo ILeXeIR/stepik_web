@@ -29,3 +29,4 @@ class Answer(models.Model):
 
 	def __str__(self):
 		return 'answer {}'.format(self.id)
+		#old format for stepik
