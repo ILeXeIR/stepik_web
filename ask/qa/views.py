@@ -1,7 +1,8 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.core.paginator import Paginator
 from .models import Question, Answer
+from .forms import AskForm, AnswerForm
 
 def test(request, *args, **kwargs):
     return HttpResponse('OK')
@@ -29,5 +30,26 @@ def popular (request):
 def question(request, question_id):
     question = get_object_or_404(Question, id=question_id)
     answers = question.answer_set.order_by('-added_at')
-    context = {'question': question, 'answers': answers}
+    if request.method != 'POST':
+        form = AnswerForm()
+    else:
+        form = AnswerForm(data=request.POST)
+        if form.is_valid():
+            answer = form.save()
+            url = question.get_url()
+            return redirect(url)
+    context = {'question': question, 'answers': answers, 'form': form}
     return render(request, 'question.html', context)
+
+def ask(request):
+    if request.method != 'POST':
+        form = AskForm()
+    else:
+        form = AskForm(data=request.POST)
+        if form.is_valid():
+            ask = form.save()
+            url = ask.get_url()
+            return redirect(url)
+    context = {'form': form}
+    return render(request, 'ask.html', context)
+
