@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+	<meta charset='utf-8'>
+	<title>Q&A</title>
+</head>
+<body>
+	<h2>Log in</h2>
+	<h4>Enter your login and password</h4>
+	<p>{{ error }}</p>
+	<form action="{% url 'qa:login' %}" method='POST'>
+		{% csrf_token %}
+		{{ form.as_p }}
+		<button name='submit'>Log in</button>
+	</form>
+</body>
+</html>
