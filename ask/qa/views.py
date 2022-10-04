@@ -94,4 +94,3 @@ def signup(request):
             return redirect('qa:index')
     context = {'form': form}
     return render(request, 'signup.html', context)
-
