@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<h2>Log in</h2>
+	<h4>Enter your login and password</h4>
+	<p>{{ error }}</p>
+	<form action="{% url 'users:login' %}" method='POST'>
+		{% csrf_token %}
+		{{ form.as_p }}
+		<button name='submit'>Log in</button>
+		<input type='hidden' name='next' value="{% url 'qa:index' %}" />
+	</form>
+{% endblock content %}

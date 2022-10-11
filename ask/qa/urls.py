@@ -5,21 +5,9 @@ from . import views
 
 app_name = 'qa'
 urlpatterns = [
-	path('', views.test, name='index'),
-	path('login/', views.test, name='login'),
-	path('signup/', views.test, name='signup'),
-	path('question/<int:question_id>/', views.test, name='question'),
-	path('ask/', views.test, name='ask'),
-	path('popular/', views.test, name='popular'),
-	path('new/', views.test, name='new'),
+	path('', views.index, name='index'),
+	path('question/<int:question_id>/', views.question, name='question'),
+	path('ask/', views.ask, name='ask'),
+	path('popular/', views.popular, name='popular'),
 ]
 
-"""
-/
-/login/
-/signup/
-/question/<123>/    # вместо <123> - произвольный ID
-/ask/
-/popular/
-/new/
-"""
