@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html lang='en'>
-<head>
-	<meta charset='utf-8'>
-	<title>Q&A</title>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block content %}
 	<h2>{{ question }}</h2>
 	<h4>{{ question.text }}</h4>
 	<ul>
@@ -17,5 +13,4 @@
 		{{ form.as_p }}
 		<button name='submit'>Send</button>
 	</form>
-</body>
-</html>
+{% endblock content %}

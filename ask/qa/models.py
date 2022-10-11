@@ -1,8 +1,15 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
+import re
 
 # Create your models here.
+class Tag(models.Model):
+	title = models.CharField(max_length=30, unique=True)
+
+	def __str__(self):
+		return self.title
+
 class QuestionManager(models.Manager): 
 	def new(self):
 		return self.order_by('-added_at')
@@ -14,9 +21,9 @@ class Question(models.Model):
 	title = models.CharField(max_length=255)
 	text = models.TextField()
 	added_at = models.DateTimeField(auto_now_add=True)
-	rating = models.IntegerField(default=0)
-	author = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True)
+	author = models.ForeignKey(User, on_delete=models.DO_NOTHING)
 	likes = models.ManyToManyField(User, related_name='question_like_user', blank=True)
+	tags = models.ManyToManyField(Tag, related_name='question_tags', blank=True)
 	objects = QuestionManager()
 
 	def __str__(self):
@@ -29,8 +36,8 @@ class Answer(models.Model):
 	text = models.TextField()
 	added_at = models.DateTimeField(auto_now_add=True)
 	question = models.ForeignKey(Question, on_delete=models.CASCADE)
-	author = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True)
+	author = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+	likes = models.ManyToManyField(User, related_name='answer_like_user', blank=True)
 
 	def __str__(self):
-		return 'answer {}'.format(self.id)
-		#old format for stepik
+		return f'answer {self.id}'

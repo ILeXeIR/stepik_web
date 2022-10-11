@@ -1,16 +1,15 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.core.paginator import Paginator
-from django.contrib.auth import authenticate, login, logout
-from .models import Question, Answer
-from .forms import AskForm, AnswerForm, LoginForm, RegisterForm
+from .models import *
+from .forms import *
 
 def test(request, *args, **kwargs):
     return HttpResponse('OK')
 
 def index(request):
     questions = Question.objects.new()
-    limit = request.GET.get('limit', 10)
+    limit = request.GET.get('limit', 5)
     page = request.GET.get('page', 1)
     paginator = Paginator(questions, limit)
     paginator.baseurl = '/?page='
@@ -20,7 +19,7 @@ def index(request):
 
 def popular (request):
     questions = Question.objects.popular()
-    limit = request.GET.get('limit', 10)
+    limit = request.GET.get('limit', 5)
     page = request.GET.get('page', 1)
     paginator = Paginator(questions, limit)
     paginator.baseurl = '/popular/?page='
@@ -51,7 +50,11 @@ def ask(request):
     else:
         form = AskForm(data=request.POST)
         if form.is_valid():
-            ask = form.save(commit=False)
+            ask = Question(**form.cleaned_data)
+            #ask = form.save(commit=False)
+            #ask.title = form.title
+            #ask.text = form.text
+            #ask.tags = form.tags
             ask.author = request.user
             ask.save()
             url = ask.get_url()
@@ -59,6 +62,7 @@ def ask(request):
     context = {'form': form}
     return render(request, 'ask.html', context)
 
+"""
 def user_login(request):
     error=''
     if request.method != 'POST':
@@ -94,4 +98,4 @@ def signup(request):
             return redirect('qa:index')
     context = {'form': form}
     return render(request, 'signup.html', context)
-
+"""

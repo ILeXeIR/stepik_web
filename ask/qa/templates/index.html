@@ -1,15 +1,19 @@
-<!DOCTYPE html>
-<html lang='en'>
-<head>
-	<meta charset='utf-8'>
-	<title>Q&A</title>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block content %}
+	<h3>
+		<a href="{% url 'qa:index' %}">New questions</a> | 
+		<a href="{% url 'qa:popular' %}">Hot questions</a>
+	</h3>
 	<ul>
 		{% for question in questions %}
-			<li><h2>
-				<a href="{% url 'qa:question' question.id %}">{{ question }}</a>
-			</h2></li>
+			<li><div>
+				<h2><a href="{% url 'qa:question' question.id %}">{{ question }}</a></h2>
+				<p>{{ question.text }}</p>
+				<p>Answers: {{ question.answer_set.count }}</p>
+				<p>by {{ question.author }} | {{ question.added_at }}</p>
+				<hr>
+			</div></li>
 		{% endfor %}
 	</ul>
 	<nav><ul class="paginator">
@@ -23,5 +27,4 @@
 			</li>
 		{% endfor %}
 	</nav></ul>
-</body>
-</html>
+{% endblock content %}

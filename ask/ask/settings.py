@@ -33,6 +33,7 @@ ALLOWED_HOSTS = ['*']
 INSTALLED_APPS = [
     #my apps
     'qa',
+    'users',
 
     #default
     'django.contrib.admin',
@@ -81,7 +82,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'stepic_web',
-        'USER': 'box',
+        'USER': 'alexander',
+        'PASSWORD': 'alex37',
     }
 }
 
