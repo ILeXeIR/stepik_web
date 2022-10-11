@@ -35,6 +35,9 @@ INSTALLED_APPS = [
     'qa',
     'users',
 
+    #foreign apps
+    'taggit',
+
     #default
     'django.contrib.admin',
     'django.contrib.auth',

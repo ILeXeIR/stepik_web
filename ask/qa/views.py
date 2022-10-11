@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.core.paginator import Paginator
+from taggit.models import Tag
 from .models import *
 from .forms import *
 
@@ -30,6 +31,7 @@ def popular (request):
 def question(request, question_id):
     question = get_object_or_404(Question, id=question_id)
     answers = question.answer_set.order_by('-added_at')
+    tags = list(question.tags.names())
     if request.method != 'POST':
         form = AnswerForm()
     else:
@@ -41,7 +43,7 @@ def question(request, question_id):
             answer.save()
             url = question.get_url()
             return redirect(url)
-    context = {'question': question, 'answers': answers, 'form': form}
+    context = {'question': question, 'answers': answers, 'tags': tags, 'form': form}
     return render(request, 'question.html', context)
 
 def ask(request):
@@ -50,13 +52,14 @@ def ask(request):
     else:
         form = AskForm(data=request.POST)
         if form.is_valid():
-            ask = Question(**form.cleaned_data)
-            #ask = form.save(commit=False)
+            ask = form.save(commit=False)
+            #ask = Question(**form.cleaned_data)
             #ask.title = form.title
             #ask.text = form.text
             #ask.tags = form.tags
             ask.author = request.user
             ask.save()
+            form.save_m2m()
             url = ask.get_url()
             return redirect(url)
     context = {'form': form}

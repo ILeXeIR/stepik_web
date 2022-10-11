@@ -4,13 +4,13 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 import re
 
-"""
+
 class AskForm(forms.ModelForm):
 	class Meta:
 		model = Question
 		fields = ['title', 'text', 'tags']
 		labels = {'title': 'Title', 'text': 'Question', 'tags': 'Tags'}
-		widgets = {'tags': forms.TextInput()}
+		
 """
 class AskForm(forms.Form):
 	title = forms.CharField(max_length=255, label="Title")
@@ -30,6 +30,7 @@ class AskForm(forms.Form):
 			return tags
 		else:
 			raise ValidationError('Use only letters, digits or undercover')
+"""
 
 class AnswerForm(forms.ModelForm):
 	class Meta:
