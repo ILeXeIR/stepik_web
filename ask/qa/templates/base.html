@@ -1,3 +1,5 @@
+{% load qa_tags %}
+
 <!DOCTYPE html>
 <html lang='en'>
 <head>
@@ -18,16 +20,7 @@
 		{% endif %}
 	</p></div>
 	<hr>
-	<div>
-		<h4>Popular Tags</h4>
-		<p>
-			<!--{{ popular_tags }}-->			
-			{% for tag in popular_tags %}
-				<a href="{% url 'qa:tagged' tag.slug %}">#{{ tag }}</a> 
-			{% endfor %}		
-		</p>
-	</div>
-	<hr>
+	{% show_popular_tags %}
 	<div>
 		{% block content %}{% endblock content %}
 	</div>
