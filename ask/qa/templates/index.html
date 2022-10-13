@@ -11,6 +11,13 @@
 				<h2><a href="{% url 'qa:question' question.id %}">{{ question }}</a></h2>
 				<p>{{ question.text }}</p>
 				<p>Answers: {{ question.answer_set.count }}</p>
+				{% if question.tags.all %}
+					<p>Tags: 
+						{% for tag in question.tags.all %}
+							<a href="{% url 'qa:tagged' tag.slug %}">#{{ tag.name }} 
+						{% endfor %}
+					</p>
+				{% endif %}
 				<p>by {{ question.author }} | {{ question.added_at }}</p>
 				<hr>
 			</div></li>

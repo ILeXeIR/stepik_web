@@ -19,6 +19,16 @@
 	</p></div>
 	<hr>
 	<div>
+		<h4>Popular Tags</h4>
+		<p>
+			<!--{{ popular_tags }}-->			
+			{% for tag in popular_tags %}
+				<a href="{% url 'qa:tagged' tag.slug %}">#{{ tag }}</a> 
+			{% endfor %}		
+		</p>
+	</div>
+	<hr>
+	<div>
 		{% block content %}{% endblock content %}
 	</div>
 </body>

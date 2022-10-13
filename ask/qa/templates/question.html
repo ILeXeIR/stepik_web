@@ -2,11 +2,13 @@
 
 {% block content %}
 	<h2>{{ question }}</h2>
-	<p>
-		{% for tag in tags %}
-			#{{ tag }} 
-		{% endfor %}
-	</p>
+	{% if question.tags.all %}
+		<p>Tags: 
+			{% for tag in question.tags.all %}
+				<a href="{% url 'qa:tagged' tag.slug %}">#{{ tag.name }}</a> 
+			{% endfor %}
+		</p>
+	{% endif %}
 	<h4>{{ question.text }}</h4>
 	<ul>
 		{% for answer in answers %}
