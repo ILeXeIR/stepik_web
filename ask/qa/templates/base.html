@@ -12,10 +12,10 @@
 		<a href="{% url 'qa:ask' %}">Ask!</a> | 
 		{% if user.is_authenticated %}
 			<span>{{ user.username }}</span> | 
-			<a href="">Settings</a> | 
+			<a href="{% url 'users:show_profile' %}">Settings</a> | 
 			<a href="{% url 'users:logout' %}">Log out</a>
 		{% else %}
-			<a href="{% url 'users:login' %}">Lig in</a> | 
+			<a href="{% url 'users:login' %}">Log in</a> | 
 			<a href="{% url 'users:signup' %}">Register</a>
 		{% endif %}
 	</p></div>

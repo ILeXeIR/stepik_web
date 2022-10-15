@@ -34,6 +34,7 @@ class Answer(models.Model):
 	question = models.ForeignKey(Question, on_delete=models.CASCADE)
 	author = models.ForeignKey(User, on_delete=models.DO_NOTHING)
 	likes = models.ManyToManyField(User, related_name='answer_like_user', blank=True)
+	is_correct = models.BooleanField(default=False)
 
 	def __str__(self):
 		return f'answer {self.id}'

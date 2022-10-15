@@ -1,8 +1,8 @@
 from django import forms
 from .models import *
 from django.contrib.auth.models import User
-from django.core.exceptions import ValidationError
-import re
+#from django.core.exceptions import ValidationError
+#import re
 
 
 class AskForm(forms.ModelForm):

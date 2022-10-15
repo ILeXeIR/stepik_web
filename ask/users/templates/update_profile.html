@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<h2>Edit settings: {{ user.username }}</h2>
+	<form action="{% url 'users:update_profile' %}" method='POST'>
+		{% csrf_token %}
+		{{ user_form.as_p }}
+		{{ profile_form.as_p }}
+		<button name='submit'>Save</button>
+		<input type='hidden' name='next' value="{% url 'users:show_profile' %}" />
+	</form>
+{% endblock content %}
