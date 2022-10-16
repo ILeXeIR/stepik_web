@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.core.paginator import Paginator
 from taggit.models import Tag
@@ -57,6 +58,7 @@ def question(request, question_id):
     context = {'question': question, 'answers': answers, 'form': form}
     return render(request, 'question.html', context)
 
+@login_required
 def ask(request):
     if request.method != 'POST':
         form = AskForm()

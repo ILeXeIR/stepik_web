@@ -8,5 +8,5 @@
 	<p>Username: {{ user.username }}</p>
 	<p>Email: {{ user.email }}</p>
 	<p>Date of registration: {{ user.date_joined }}</p>
-	<p><a href="{% url 'qa:tagged' tag.slug %}">Edit</a><p>
+	<p><a href="{% url 'users:update_profile' %}">Edit</a><p>
 {% endblock content %}
