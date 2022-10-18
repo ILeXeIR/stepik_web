@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load likes_options %}
 
 {% block content %}
 	<h2>{{ question }}</h2>
@@ -10,9 +11,11 @@
 		</p>
 	{% endif %}
 	<h4>{{ question.text }}</h4>
+	{% q_like_button question user.id request.path %}
 	<ul>
 		{% for answer in answers %}
 			<li><p>{{ answer.text }}</p></li>
+			{% a_like_button answer user.id request.path %}
 		{% endfor %}
 	</ul>
 	{% if user.is_authenticated %}

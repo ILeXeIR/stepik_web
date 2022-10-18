@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load likes_options %}
 
 {% block content %}
 	<h3>
@@ -18,6 +19,7 @@
 						{% endfor %}
 					</p>
 				{% endif %}
+				{% q_like_button question user.id request.get_full_path %}
 				<p>by {{ question.author }} | {{ question.added_at }}</p>
 				<hr>
 			</div></li>

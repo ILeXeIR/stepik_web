@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Count
 from django.contrib.auth.models import User
 from django.urls import reverse
 from taggit.managers import TaggableManager
@@ -11,7 +12,7 @@ class QuestionManager(models.Manager):
 		return self.order_by('-added_at')
 
 	def popular(self):
-		return self.order_by('-rating')
+		return self.annotate(likes_count=Count('likes')).order_by('-likes_count')
 
 class Question(models.Model):
 	title = models.CharField(max_length=255)

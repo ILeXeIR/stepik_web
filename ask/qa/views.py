@@ -31,7 +31,7 @@ def popular (request):
 
 def tagged (request, slug):
     tag = get_object_or_404(Tag, slug=slug)
-    questions = Question.objects.filter(tags=tag)
+    questions = Question.objects.popular().filter(tags=tag)
     limit = request.GET.get('limit', 5)
     page = request.GET.get('page', 1)
     paginator = Paginator(questions, limit)
@@ -74,3 +74,28 @@ def ask(request):
     context = {'form': form}
     return render(request, 'ask.html', context)
 
+@login_required
+def question_like(request, **kwargs):
+    url_from = request.POST.get('url_from')
+    question_id = request.POST.get('question_id')
+    question = get_object_or_404(Question, id=question_id)
+    if request.method == 'POST':
+        user = request.user
+        if question.likes.filter(id=user.id):
+            question.likes.remove(user)
+        else:
+            question.likes.add(user)
+    return redirect(url_from)
+
+@login_required
+def answer_like(request, **kwargs):
+    url_from = request.POST.get('url_from')
+    answer_id = request.POST.get('answer_id')
+    answer = get_object_or_404(Answer, id=answer_id)
+    if request.method == 'POST':
+        user = request.user
+        if answer.likes.filter(id=user.id):
+            answer.likes.remove(user)
+        else:
+            answer.likes.add(user)
+    return redirect(url_from)
