@@ -11,6 +11,7 @@ urlpatterns = [
 	path('popular/', views.popular, name='popular'),
 	path('tagged/<slug:slug>/', views.tagged, name='tagged'),
 	path('question_like/', views.question_like, name='question_like'),
-	path('answer_like/', views.answer_like, name='answer_like')
+	path('answer_like/', views.answer_like, name='answer_like'),
+	path('answer_correct/', views.answer_correct, name='answer_correct'),
 ]
 

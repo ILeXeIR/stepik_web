@@ -3,19 +3,30 @@
 
 {% block content %}
 	<h3>
-		<a href="{% url 'qa:index' %}">New questions</a> | 
-		<a href="{% url 'qa:popular' %}">Hot questions</a>
+		{% if order == 'new' %}
+			<span>New questions</span>
+		{% else %}
+			<a href="{% url 'qa:index' %}">New questions</a>
+		{% endif %} | 
+		{% if order == 'popular' %}
+			<span>Hot questions</span>
+		{% else %}
+			<a href="{% url 'qa:popular' %}">Hot questions</a>
+		{% endif %}
 	</h3>
+	{% if tag_filter %}
+		<h2>Filtered by #{{ tag_filter }}</h2>
+	{% endif %}
 	<ul>
 		{% for question in questions %}
 			<li><div>
 				<h2><a href="{% url 'qa:question' question.id %}">{{ question }}</a></h2>
-				<p>{{ question.text }}</p>
+				<p>{{ question.text|truncatewords:30 }}</p>
 				<p>Answers: {{ question.answer_set.count }}</p>
 				{% if question.tags.all %}
 					<p>Tags: 
 						{% for tag in question.tags.all %}
-							<a href="{% url 'qa:tagged' tag.slug %}">#{{ tag.name }} 
+							<a href="{% url 'qa:tagged' tag.slug %}">#{{ tag.name }} ></a>
 						{% endfor %}
 					</p>
 				{% endif %}

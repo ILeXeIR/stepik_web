@@ -15,7 +15,23 @@
 	<ul>
 		{% for answer in answers %}
 			<li><p>{{ answer.text }}</p></li>
+			{% if answer.is_correct %}
+				<h5>It's a correct answer!</h5>
+			{% endif %}
 			{% a_like_button answer user.id request.path %}
+			{% if user == question.author %}
+				<form action="{% url 'qa:answer_correct' %}" method='POST'>
+					{% csrf_token %}
+					<input type='hidden' name='answer_id' value='{{ answer.id }}'>
+					<button name='submit'>
+						{% if answer.is_correct %}
+							Wrong! 
+						{% else %}
+							Correct! 
+						{% endif %}
+					</button>
+				</form>
+			{% endif %}
 		{% endfor %}
 	</ul>
 	{% if user.is_authenticated %}

@@ -16,7 +16,8 @@ def index(request):
     paginator = Paginator(questions, limit)
     paginator.baseurl = '/?page='
     page = paginator.page(page)
-    context = {'questions': page.object_list, 'paginator': paginator, 'page': page}
+    context = {'questions': page.object_list, 'paginator': paginator, 
+                'page': page, 'order': 'new'}
     return render(request, 'index.html', context)
 
 def popular (request):
@@ -26,7 +27,8 @@ def popular (request):
     paginator = Paginator(questions, limit)
     paginator.baseurl = '/popular/?page='
     page = paginator.page(page)
-    context = {'questions': page.object_list, 'paginator': paginator, 'page': page}
+    context = {'questions': page.object_list, 'paginator': paginator, 
+                'page': page, 'order': 'popular'}
     return render(request, 'index.html', context)
 
 def tagged (request, slug):
@@ -37,7 +39,8 @@ def tagged (request, slug):
     paginator = Paginator(questions, limit)
     paginator.baseurl = f'/tagged/{slug}/?page='
     page = paginator.page(page)
-    context = {'questions': page.object_list, 'paginator': paginator, 'page': page, 'tag': tag}
+    context = {'questions': page.object_list, 'paginator': paginator, 
+                'page': page, 'tag_filter': tag}
     return render(request, 'index.html', context)
 
 
@@ -99,3 +102,13 @@ def answer_like(request, **kwargs):
         else:
             answer.likes.add(user)
     return redirect(url_from)
+
+@login_required
+def answer_correct(request, **kwargs):
+    answer_id = request.POST.get('answer_id')
+    answer = get_object_or_404(Answer, id=answer_id)
+    question = answer.question
+    if request.method == 'POST' and request.user == question.author:
+        answer.is_correct = not answer.is_correct
+        answer.save()
+    return redirect(question.get_url())
