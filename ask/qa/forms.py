@@ -36,4 +36,11 @@ class AnswerForm(forms.ModelForm):
 	class Meta:
 		model = Answer
 		fields = ['text']
-		labels = {'text': 'Write your answer'}
+		labels = {'text': ''}
+
+		widgets = {
+			'text': forms.Textarea(attrs={
+				'class' : 'form-control', 
+				'placeholder' : 'Give your answer here.',
+				})
+		}

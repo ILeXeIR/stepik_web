@@ -2,11 +2,11 @@
 	{% csrf_token %}
 	<input type='hidden' name='url_from' value='{{ url_from }}'>
 	<input type='hidden' name='answer_id' value='{{ answer.id }}'>
-	<button name='submit' class="btn btn-danger btn-sm">
+	<button name='submit'>
 		{% if is_liked %}
-			<i class="fa-solid fa-heart"></i>
+			LIKES: 
 		{% else %}
-			<i class="fa-regular fa-heart"></i>
+			likes: 
 		{% endif %}
 		{{ likes_count }}
 	</button>
